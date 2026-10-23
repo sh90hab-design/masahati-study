@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>مساحتي | مذاكرتي</title>
+<style>
+:root{--bg:#0b1220;--panel:#141f32;--panel2:#1b2940;--text:#f2f5fb;--muted:#a9b7cb;--accent:#83e0c2;--accent2:#9fb8ff;--line:#2a3a53;--danger:#ffb4b4}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#1b3150 0,#0b1220 48%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6}button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:10px 14px;background:var(--accent);color:#102033;font-weight:700}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button:focus-visible,input:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}.wrap{max-width:1050px;margin:auto;padding:22px 16px 60px}.hero{padding:26px 22px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,rgba(131,224,194,.12),rgba(159,184,255,.1));display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}.eyebrow{color:var(--accent);font-size:.9rem;font-weight:800}.hero h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.2;margin:7px 0}.hero p{color:var(--muted);margin:8px 0 0}.date{color:var(--muted);font-size:.9rem}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}.stat,.card{background:rgba(20,31,50,.94);border:1px solid var(--line);border-radius:18px;padding:17px}.stat strong{display:block;font-size:1.55rem}.stat span,.muted{color:var(--muted);font-size:.92rem}.progress{height:8px;background:#26364c;border-radius:99px;overflow:hidden;margin-top:9px}.progress div{height:100%;width:0;background:var(--accent);transition:width .2s}.tabs{display:flex;gap:8px;overflow:auto;padding:4px 0 12px;margin:12px 0}.tabs button{white-space:nowrap}.tabs button.active{background:var(--accent2);color:#111c30}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.card h2{margin:0 0 12px;font-size:1.2rem}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.field{width:100%;background:#0e1828;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px}.form{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:14px}.task{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding:12px 0}.task input{margin-top:7px;accent-color:var(--accent);width:18px;height:18px}.task .name{flex:1}.task.done .name{text-decoration:line-through;color:var(--muted)}.tag{display:inline-block;font-size:.78rem;color:var(--accent);background:#203d43;padding:2px 8px;border-radius:99px;margin-inline-start:5px}.timer{text-align:center;padding:10px 0}.clock{font-size:clamp(2.7rem,10vw,4.3rem);font-variant-numeric:tabular-nums;letter-spacing:2px;font-weight:800}.timer-mode{color:var(--muted);margin-bottom:10px}.timer-controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.vocab-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.word{background:#0e1828;border:1px solid var(--line);padding:7px 10px;border-radius:10px}.word small{display:block;color:var(--muted)}.empty{color:var(--muted);padding:14px 0}.hidden{display:none!important}footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:22px}.notice{color:var(--muted);font-size:.85rem;margin-top:9px}@media(max-width:700px){.grid{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:12px}.form{grid-template-columns:1fr}.hero{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div><div class="eyebrow">مساحتك الهادية للمذاكرة ✦</div><h1>مساحتي</h1><p>خطوة صغيرة النهارده، فرق كبير بعدين.</p></div>
+<div><div class="date" id="today"></div><div class="row" style="margin-top:10px"><button class="secondary" id="resetDay">تصفير المؤقت</button></div></div>
+</header>
+<section class="stats" aria-label="إحصائيات المذاكرة">
+<div class="stat"><span>إنجاز المهام</span><strong id="doneCount">0 / 0</strong><div class="progress"><div id="progressBar"></div></div></div>
+<div class="stat"><span>وقت المذاكرة اليوم</span><strong id="studyTime">00:00</strong></div>
+<div class="stat"><span>كلمات محفوظة</span><strong id="wordCount">0</strong></div>
+</section>
+<nav class="tabs" aria-label="أقسام الموقع">
+<button class="active" data-tab="home">الرئيسية</button><button class="secondary" data-tab="tasks">دروسي ومهامي</button><button class="secondary" data-tab="timerPanel">المؤقت</button><button class="secondary" data-tab="vocab">كلمات الإنجليزي</button>
+</nav>
+<section id="home" class="panel">
+<div class="grid">
+<div class="card"><h2>خطة النهارده</h2><p class="muted">اختار مهمة واحدة وابدأ بيها. مش لازم تخلص كل حاجة مرة واحدة.</p><div id="todayTasks"></div><button class="secondary" id="goTasks">إدارة كل المهام</button></div>
+<div class="card"><h2>بداية هادية</h2><p>جرّب 25 دقيقة تركيز وبعدها 5 دقايق راحة. لو اليوم تقيل، ابدأ بعشر دقايق بس.</p><div class="row"><button id="startFocus">ابدأ 25 دقيقة</button><button class="secondary" id="startBreak">استراحة 5 دقائق</button></div><p class="notice">تقدمك بيتحفظ على نفس المتصفح تلقائيًا.</p></div>
+</div>
+</section>
+<section id="tasks" class="panel hidden">
+<div class="card"><h2>دروسي ومهامي</h2>
+<form id="taskForm" class="form"><input class="field" id="taskName" placeholder="اسم الدرس أو المهمة" required maxlength="100"><select class="field" id="taskSubject" aria-label="المادة"><option>اللغة العربية</option><option>التاريخ</option><option>الإنجليزي</option><option>الفيزياء</option><option>مهمة عامة</option></select><button type="submit">إضافة</button></form>
+<div id="taskList"></div><p class="notice">تقدر تضيف الدروس اللي متراكمة عليك وتعلّم عليها لما تخلصها.</p></div>
+</section>
+<section id="timerPanel" class="panel hidden">
+<div class="card timer"><h2>مؤقت التركيز</h2><div class="timer-mode" id="timerMode">وقت المذاكرة</div><div class="clock" id="clock">25:00</div><div class="timer-controls"><button id="timerToggle">ابدأ</button><button class="secondary" id="timerReset">إعادة</button><button class="secondary" id="timerSwitch">بدّل لوضع الراحة</button></div><p class="notice">سيُضاف الوقت الفعلي للمذاكرة إلى إجمالي اليوم عند تشغيل المؤقت.</p></div>
+</section>
+<section id="vocab" class="panel hidden">
+<div class="grid"><div class="card"><h2>دفتر الكلمات</h2><form id="wordForm" class="form"><input class="field" id="arabicWord" placeholder="الكلمة بالعربي" required maxlength="80"><input class="field" id="englishWord" placeholder="بالإنجليزي" required maxlength="80"><button type="submit">حفظ</button></form><div id="wordList" class="vocab-list"></div></div>
+<div class="card"><h2>اختبر نفسك</h2><p class="muted">هتظهر لك كلمة بالعربي؛ افتكر معناها بالإنجليزي.</p><div id="quizPrompt">أضف كلماتك وابدأ الاختبار.</div><input class="field" id="quizAnswer" placeholder="اكتب الإجابة بالإنجليزي" style="margin:10px 0"><div class="row"><button id="checkAnswer">تحقق</button><button class="secondary" id="nextWord">كلمة تانية</button></div><p id="quizFeedback" class="notice"></p></div></div>
+</section>
+<footer>مساحتي — معمول عشان يساعدك تبدأ، مش عشان يضغط عليك 🌱</footer>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const KEY='masahatiStudyV1';
+let state={tasks:[],words:[],studySeconds:0};
+try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function fmt(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
+function render(){
+const done=state.tasks.filter(t=>t.done).length;$('#doneCount').textContent=done+' / '+state.tasks.length;$('#progressBar').style.width=(state.tasks.length?done/state.tasks.length*100:0)+'%';$('#studyTime').textContent=fmt(state.studySeconds);$('#wordCount').textContent=state.words.length;
+const makeTask=t=>'<div class="task '+(t.done?'done':'')+'"><input type="checkbox" '+(t.done?'checked':'')+' aria-label="تم الإنجاز" data-check="'+t.id+'"><div class="name">'+esc(t.name)+' <span class="tag">'+esc(t.subject)+'</span></div><button class="secondary" data-delete="'+t.id+'" aria-label="حذف المهمة">حذف</button></div>';
+$('#taskList').innerHTML=state.tasks.length?state.tasks.map(makeTask).join(''):'<div class="empty">لسه مفيش مهام. أضف أول درس فوق.</div>';
+$('#todayTasks').innerHTML=state.tasks.filter(t=>!t.done).slice(0,4).map(makeTask).join('')||'<p class="empty">مفيش مهام معلقة هنا. أضف درس أو خُد راحة قصيرة.</p>';
+$('#wordList').innerHTML=state.words.length?state.words.map(w=>'<div class="word">'+esc(w.ar)+'<small>'+esc(w.en)+'</small></div>').join(''):'<p class="empty">ابدأ بإضافة أول كلمة.</p>';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('#today').textContent=new Intl.DateTimeFormat('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.panel').forEach(p=>p.classList.add('hidden'));$('#'+b.dataset.tab).classList.remove('hidden');document.querySelectorAll('[data-tab]').forEach(x=>{x.classList.toggle('active',x===b);x.classList.toggle('secondary',x!==b)})}));
+$('#goTasks').onclick=()=>document.querySelector('[data-tab="tasks"]').click();
+$('#taskForm').addEventListener('submit',e=>{e.preventDefault();state.tasks.push({id:Date.now()+Math.random(),name:$('#taskName').value.trim(),subject:$('#taskSubject').value,done:false});$('#taskName').value='';save()});
+document.addEventListener('change',e=>{if(e.target.matches('[data-check]')){const t=state.tasks.find(t=>String(t.id)===e.target.dataset.check);if(t)t.done=e.target.checked;save()}});
+document.addEventListener('click',e=>{const id=e.target.dataset.delete;if(id!==undefined){state.tasks=state.tasks.filter(t=>String(t.id)!==id);save()}});
+$('#wordForm').addEventListener('submit',e=>{e.preventDefault();state.words.push({ar:$('#arabicWord').value.trim(),en:$('#englishWord').value.trim()});$('#arabicWord').value='';$('#englishWord').value='';save();setQuiz()});
+let mode=25*60,remaining=mode,running=false,interval=null,lastTick=0;
+function showClock(){$('#clock').textContent=fmt(remaining);$('#timerMode').textContent=mode===25*60?'وقت المذاكرة':'وقت الراحة';$('#timerToggle').textContent=running?'إيقاف مؤقت':'ابدأ'}
+function stopTimer(){running=false;if(interval)clearInterval(interval);interval=null;showClock()}
+function startTimer(){if(running)return;running=true;lastTick=Date.now();interval=setInterval(()=>{const now=Date.now();const delta=Math.max(0,Math.round((now-lastTick)/1000));lastTick=now;if(mode===25*60)state.studySeconds+=delta;remaining-=delta;if(remaining<=0){remaining=0;stopTimer();if(mode===25*60)alert('عاش! خلصت جلسة التركيز. خد راحة قصيرة.');else alert('خلصت الراحة. جاهز ترجع؟');}showClock();localStorage.setItem(KEY,JSON.stringify(state));$('#studyTime').textContent=fmt(state.studySeconds);if(remaining===0){mode=mode===25*60?5*60:25*60;remaining=mode;showClock()}},1000);showClock()}
+$('#timerToggle').onclick=()=>running?stopTimer():startTimer();
+$('#timerReset').onclick=()=>{stopTimer();remaining=mode;showClock()};
+$('#timerSwitch').onclick=()=>{stopTimer();mode=mode===25*60?5*60:25*60;remaining=mode;showClock()};
+$('#startFocus').onclick=()=>{document.querySelector('[data-tab="timerPanel"]').click();stopTimer();mode=25*60;remaining=mode;showClock();startTimer()};
+$('#startBreak').onclick=()=>{document.querySelector('[data-tab="timerPanel"]').click();stopTimer();mode=5*60;remaining=mode;showClock();startTimer()};
+$('#resetDay').onclick=()=>{if(confirm('تصفير إجمالي وقت المذاكرة؟')){state.studySeconds=0;save()}};
+let currentWord=null;
+function setQuiz(){currentWord=state.words.length?state.words[Math.floor(Math.random()*state.words.length)]:null;$('#quizPrompt').textContent=currentWord?'ترجم: '+currentWord.ar:'أضف كلماتك وابدأ الاختبار.';$('#quizAnswer').value='';$('#quizFeedback').textContent=''}
+$('#nextWord').onclick=setQuiz;
+$('#checkAnswer').onclick=()=>{if(!currentWord){$('#quizFeedback').textContent='أضف كلمات في الدفتر الأول.';return}const ok=$('#quizAnswer').value.trim().toLowerCase()===currentWord.en.trim().toLowerCase();$('#quizFeedback').textContent=ok?'صح عليك! 🌟':'الإجابة: '+currentWord.en;};
+render();showClock();setQuiz();
+</script>
+</body>
+</html>
